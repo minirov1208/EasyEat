@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e#@wxmu#ft5)h=4jek!v*r1jcw6*v0xj1g)+dt^_r6%0n6i0e8'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -52,6 +55,17 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("MYSQL_DATABASE"),
+        "USER": os.getenv("MYSQL_USERNAME"),
+        "PASSWORD": os.getenv("MYSQL_PASSWORD"),
+        "HOST": os.getenv("MYSQL_HOST"),
+        "PORT": os.getenv("MYSQL_PORT"),
+    }
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -70,16 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
@@ -104,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "zh-Hant"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Taipei"
 
 USE_I18N = True
 
