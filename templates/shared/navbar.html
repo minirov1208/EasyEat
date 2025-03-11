@@ -1,0 +1,22 @@
+<div class="navbar bg-[#F5E1A4] text-black" data-theme="light">
+  <div class="flex-1">
+    <a href="{% url 'homepages:index' %}" class="text-xl btn btn-ghost text-gray-800">EasyEat</a>
+  </div>
+  <div class="flex-none">
+    <ul class="px-1 menu menu-horizontal">
+      {% if user.is_authenticated %}
+      <li><a class="text-gray-800">{{ user.username }}</a></li>
+      <li>
+        <a class="text-gray-800" hx-post="{% url 'users:logout' %}" hx-target="body" hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-on="click: this.disabled = true">登出</a>
+      </li>
+      {% else %}
+      <li>
+        <a class="text-gray-800 btn btn-ghost" href="{% url 'users:login' %}">登入</a>
+      </li>
+      <li>
+        <a class="text-gray-800 btn btn-ghost" href="{% url 'users:register' %}">註冊</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
